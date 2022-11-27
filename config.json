@@ -1,0 +1,11 @@
+{
+  // Custom elements specified here are included by default in all html templates
+  "elements": [
+    // { "require": "Classname", "include": "header.hpp", "tagName", "html-tag" }
+    { "require": "ParameterView", "include": "views/components/parameter.hpp", "tagName": "param-view" },
+    { "require": "MethodListView", "include": "views/components/method_list.hpp", "tagName": "method-list" },
+    { "require": "MethodListItem", "include": "views/components/method_list_item.hpp", "tagName": "method-list-item" },
+    { "require": "TypeView", "include": "views/components/type.hpp", "tagName": "type-view" },
+    { "require": "::DocBlock", "include": "views/components/doc_block.hpp", "tagName": "doc-block" }
+  ]
+}

@@ -1,0 +1,40 @@
+<template>
+  <head>
+    <include src="collections/namespaces.hpp" />
+    <include src="collections/functions.hpp" />
+    <include src="collections/enums.hpp" />
+    <include src="views/components/namespace_list.hpp" require="::NamespaceListView" tag-name="namespace-list" />
+    <include src="views/components/class_list.hpp" require="::ClassListView" tag-name="class-list" />
+    <include src="views/components/function_list.hpp" require="::FunctionListView" tag-name="function-list" />
+    <include src="views/components/enum_list.hpp" require="::EnumListView" tag-name="enum-list" />
+    <include src="views/components/class_breadcrumb.hpp" require="::ClassBreadcrumb" tag-name="breadcrumbs" />
+    <attribute type="std::string" name="title" />
+    <attribute type="std::string" name="package" />
+    <attribute type="std::string" name="documentation" />
+    <attribute type="NamespaceCollection::Subset" name="namespaces" />
+    <attribute type="ClassCollection::Subset" name="classes" />
+    <attribute type="FunctionCollection::Subset" name="functions" />
+    <attribute type="EnumCollection::Subset" name="enums" />
+  </head>
+  <body>
+    <breadcrumbs ref="breadcrumbs" />
+    <h1 text.bind="title" />
+    <div class="card" ref="doc_wrapper" show.bind="package.length()">
+      <div class="card-body">
+        <doc-block class="card-body doc-block" cpp::source.bind="documentation" ref="doc" />
+      </div>
+    </div>
+    <div show.bind="namespaces.size()">
+      <namespace-list cpp::models.bind="namespaces" />
+    </div>
+    <div show.bind="enums.size()">
+      <enum-list cpp::models.bind="enums" />
+    </div>
+    <div show.bind="classes.size()">
+      <class-list cpp::models.bind="classes" />
+    </div>
+    <div show.bind="functions.size()">
+      <function-list cpp::models.bind="functions" />
+    </div>
+  </body>
+</template>

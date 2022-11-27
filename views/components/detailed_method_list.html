@@ -1,0 +1,21 @@
+<template>
+  <head>
+    <include src="models/class.hpp" />
+    <attribute type="std::shared_ptr<ClassModel>" name="model" />
+    <attribute type="std::set<std::string>" name="method_names" />
+    <attribute type="std::map<std::string, std::string>*" name="docs" />
+  </head>
+  <body>
+    <div class="method-doc card"
+         repeat.for="method_name of [std::set<std::string>]method_names">
+      <h5 class="card-header" text.bind="method_name" id.bind='"method_" + method_name' />
+      <div class="card-body">
+        <div class="method-headers"
+	     repeat.for="method of [MethodList]root->model->get_methods_by_name(method_name)">
+          <method-list-item class="method-header" cpp::model.bind="method" />
+        </div>
+        <doc-block cpp::source.bind="root->docs->at(method_name)" />
+      </div>
+    </div>
+  </body>
+</template>

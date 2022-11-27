@@ -1,0 +1,24 @@
+<template>
+  <head>
+    <include src="models/enum.hpp" />
+    <include src="views/components/class_breadcrumb.hpp" require="::ClassBreadcrumb" tag-name="breadcrumbs" />
+    <attribute type="std::shared_ptr<EnumModel>" name="model" />
+  </head>
+  <body>
+    <breadcrumbs cpp::namespace.bind="*model" />
+    <h1>
+      enum <span text.bind="model->get_name()" style="margin-left:5px"/>
+    </h1>
+
+    <div class="card">
+      <table class="table table-striped" style="margin-bottom:0">
+        <tbody>
+          <tr repeat.for="value of [std::vector<std::pair<std::string, long long>>]model->get_values()">
+            <td text.bind="value.first" />
+            <td text.bind="std::to_string(value.second)" />
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</template>

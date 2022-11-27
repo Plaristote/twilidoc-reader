@@ -1,0 +1,37 @@
+<template>
+  <head>
+    <include src="models/project.hpp" />
+    <script>
+      std::string title() const { return ProjectModel::instance.get_name().length() ? ProjectModel::instance.get_name() : "Twilidoc"; }
+      std::string logo() const { return ProjectModel::instance.get_logo().length() ? ProjectModel::instance.get_logo() : "twicon.png"; }
+      bool has_packages() const { return ProjectModel::instance.get_packages().size() > 0; }
+    </script>
+  </head>
+  <body tag-name="nav" class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src.bind="logo() & signal:brand-update" style="height:46px;margin:-10px 0"/>
+        <span text.bind="title() & signal:brand-update" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav me-auto mb-2 mb-md-0" ref="links">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">Home</a>
+          </li>
+          <li class="nav-item" show.bind="has_packages()">
+            <a class="nav-link" href="#/packages">Packages</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#/namespaces">Explore</a>
+          </li>
+        </ul>
+        <div class="d-flex search-form" submit.trigger="return true">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search (Ctrl+K)" ref="search_input"/>
+        </div>
+      </div>
+    </div>
+  </body>
+</template>

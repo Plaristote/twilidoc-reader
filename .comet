@@ -1,0 +1,5 @@
+cheerp-path:/opt/cheerp
+html-config:config.json
+local-libdir:lib
+name:twilidoc
+toolchain:cmake

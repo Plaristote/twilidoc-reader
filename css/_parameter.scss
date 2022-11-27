@@ -1,0 +1,19 @@
+parameter {
+  display: inline-block;
+  position: relative;
+
+  > * { margin-right: $param-separator-width; }
+
+  .typeconst {
+    color: black;
+  }
+
+  .other-type {
+    text-decoration: none;
+    cursor: default;
+  }
+
+  .varname {
+    font-style: italic;
+  }
+}

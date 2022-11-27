@@ -1,0 +1,27 @@
+<template>
+  <head>
+    <include src="set" />
+    <include src="models/project.hpp" />
+    <attribute type="std::set<std::string>" name="packages" />
+    <script>
+      std::string package_excerpt(const std::string& package) const
+      {
+        return ProjectModel::instance.get_package_excerpt(package);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+      <div class="col" repeat.for="package of [std::set<std::string>]packages">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">
+              <a href.bind='"#/packages/" + package + "/namespaces"' text.bind="package" />
+            </h5>
+            <p class="card-text" innerhtml.bind="root->package_excerpt(package)"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</template>

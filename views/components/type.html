@@ -1,0 +1,26 @@
+<template>
+  <head>
+    <include src="models/type_solver.hpp" />
+    <include src="views/components/type_popup.hpp" require="TypePopup" />
+    <attribute type="std::string" name="type_name" />
+    <attribute type="TypeSolver" name="type_solver" />
+    <attribute type="bool" name="button" value="true" />
+    <script>
+      bool has_link() const { return type_solver.get_link().length(); }
+      virtual bool has_popup() const = 0;
+      virtual std::string get_type_class() const = 0;
+    </script>
+  </head>
+  <body>
+    <a href.bind="type_solver.get_link()"
+       target.bind="type_solver.get_link_target()"
+       class.bind="get_type_class()"
+       text.bind="type_name"
+       click.trigger="if (!has_link()) { _event->preventDefault(); }"
+       mouseenter.trigger="if (has_popup()) { popup.set_visible(true); }"
+       mouseleave.trigger="popup.set_visible(false)" />
+    <type-popup ref="popup"
+                cpp::type_solver.bind="type_solver"
+                show.bind="false" />
+  </body>
+</template>

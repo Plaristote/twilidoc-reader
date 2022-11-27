@@ -1,0 +1,18 @@
+.breadcrumbs {
+  margin-top: 10px;
+
+  .crumb {
+    display: inline-block;
+    margin: 0 3px;
+    font-size: 1.2em;
+  }
+
+  .sep::before {
+    content: "::";
+    color: gray;
+    font-weight: bold;
+  }
+}
+
+
+
