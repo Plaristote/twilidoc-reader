@@ -1,0 +1,30 @@
+nav.navbar {
+  .search-form {
+    width: 80%;
+  }
+
+  .ts-control {
+    border: 0;
+  }
+
+  .search-option {
+    .alias {
+      display: inline-block;
+      font-size: 1.5em;
+    }
+
+    .kind {
+      display: inline-block;
+      vertical-align: text-top;
+      width: 70px;
+      text-align: center;
+      margin-right: 7px;
+    }
+
+    .true-name {
+      display: block;
+      color: gray;
+    }
+  }
+}
+

@@ -1,0 +1,72 @@
+@import "layout";
+@import "breadcrumbs";
+@import "navbar";
+@import "types";
+@import "method_list";
+@import "template_params";
+@import "class";
+@import "parameter";
+
+.container.twilidoc-container {
+  @media (max-width: 768px) {
+    max-width: 700px;
+    min-width: 623px;
+  }
+
+  @media (min-width: 1200px) {
+    max-width: 960px;
+  }
+}
+
+.card {
+  margin: 10px 0;
+}
+
+class-list {
+  display: block;
+}
+
+.list-group-item > .key {
+  display: inline-block;
+  width: 170px;
+}
+
+.type-children-list {
+  margin-bottom: 25px;
+}
+
+.project-context-list {
+  .list-group-item {
+    white-space: nowrap;
+    overflow: hidden;
+
+    .excerpt {
+      display: inline-block;
+      margin-left: 20px;
+      color: gray;
+      height: 18px;
+      font-size: 0.8em;
+    }
+  }
+}
+
+@keyframes spin {
+  100% {
+      -webkit-transform: rotate(360deg);
+      transform:rotate(360deg);
+  }
+}
+
+.loading-view {
+  text-align: center;
+  padding: 50px;
+  img {
+    display: block;
+    margin: 0 auto;
+    padding: 10px;
+    animation: spin 3s linear infinite;
+  }
+  span {
+    font-size: 1.5em;
+  }
+}

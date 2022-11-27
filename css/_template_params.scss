@@ -1,0 +1,22 @@
+template-params {
+  &::before {
+    content: "<";
+  }
+  &::after {
+    content: ">";
+  }
+}
+
+.template-param {
+  > *:not(:first-of-type) {
+    margin: 0 0 0 5px;
+  }
+
+  &:not(:first-of-type)::before {
+    content: ", ";
+  }
+
+  type::before {
+    content: "= ";
+  }
+}

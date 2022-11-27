@@ -1,0 +1,15 @@
+<template>
+  <head>
+    <include src="models/template_parameter.hpp" />
+    <attribute type="TemplateParameters" name="list" />
+  </head>
+  <body>
+    <span class="template-param" repeat.for="param of [TemplateParameters]list">
+      <span text.bind="param.type" class="template-type" />
+      <span text.bind="param.name" class="template-name" />
+      <type-view cpp::type_name.bind="param.default_value"
+                 cpp::button.bind="false"
+                 show.bind="param.default_value.length() > 0" />
+    </span>
+  </body>
+</template>

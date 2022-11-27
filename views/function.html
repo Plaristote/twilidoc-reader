@@ -1,0 +1,45 @@
+<template>
+  <head>
+    <include src="models/function.hpp" />
+    <include src="views/components/template_params.hpp" require="::TemplateParamsView" />
+    <include src="views/components/class_breadcrumb.hpp" require="::ClassBreadcrumb" tag-name="breadcrumbs" />
+    <include src="views/components/method_list_item.hpp" require="::MethodListItem" />
+    <attribute type="std::shared_ptr<FunctionModel>" name="model" />
+  </head>
+  <body>
+    <breadcrumbs cpp::function.bind="*model" />
+    <h1 text.bind="model->get_name()" />
+
+    <div class="card type-children-list">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="key">Include</span>
+	  <code class="value" text.bind='"#include <" + model->get_include_path() + ">"' />
+        </li>
+	<li class="list-group-item" show.bind="model->get_ldflags().length()">
+          <span class="key">Ldflags</span>
+	  <code class="value" text.bind="model->get_ldflags()" />
+        </li>
+	<li class="list-group-item" show.bind="model->is_template()">
+          <span class="key">Template parameters</span>
+          <template-params-view class="value" cpp::list.bind="model->get_template_parameters()" />
+	</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-body">
+        <div class="card-body">
+          <method-list-item class="function-identity" cpp::model.bind="model" />
+        </div>
+      </div>
+    </div>
+
+    <div class="card" show.bind="model->get_doc().length() > 0">
+      <div class="card-body">
+        <h5 class="card-title">Detailed description</h5>
+        <doc-block class="card-body doc-block" ref="doc" />
+      </div>
+    </div>
+  </body>
+</template>

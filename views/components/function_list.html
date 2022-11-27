@@ -1,0 +1,17 @@
+<template>
+  <head>
+    <include src="collections/functions.hpp" />
+    <attribute type="FunctionCollection::Subset" name="models" />
+  </head>
+  <body class="card type-children-list project-context-list">
+    <div class="card-body">
+      <h5 class="card-title">Functions</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" repeat.for="model of [FunctionCollection::Subset]models">
+        <a href.bind="model->get_uri()" text.bind="model->get_name()" />
+        <span class="excerpt" innerhtml.bind="model->get_excerpt()" />
+      </li>
+    </ul>
+  </body>
+</template>

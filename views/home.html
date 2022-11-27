@@ -1,0 +1,12 @@
+<template>
+  <head>
+    <attribute type="bool" name="loading" value="true" />
+  </head>
+  <body>
+    <doc-block ref="doc_view" />
+    <div class="container" show.bind="loading">
+      <h1 class="mt-5">Loading</h1>
+      <p class="lead">We're currently loading your project ! Hang in there !</p>
+    </div>
+  </body>
+</template>

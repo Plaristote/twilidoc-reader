@@ -1,0 +1,93 @@
+$param-separator-width: 5px;
+
+.function-identity > * {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.method-grid {
+  padding: 5px;
+  margin-bottom: 10px;
+
+  &.inherited-methods::before {
+    content: "Inherited members";
+    font-weight: bold;
+    margin-left: -20px;
+  }
+}
+
+.method-list {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: [visibility] 1fr [return] 4fr [symbol] 2fr [params] 8fr [annotations] 3fr [end] 0;
+
+  > .separator {
+    grid-column-start: visibility;
+    grid-column-end: end;
+    height: 1px;
+    background-color: lightgray;
+    padding: 0;
+    margin-left: -37px;
+    margin-right: -48px;
+  }
+
+  > .visibility {
+    &.public:after {
+      content: "+";
+    }
+    &.protected:after {
+      content: "#";
+    }
+    &.private:after {
+      content: "-";
+    }
+  }
+
+  > .return-type {
+    text-align: right;
+    &.void-return-type { margin-right: $param-separator-width; }
+  }
+
+  > .field-name {
+    grid-column-start: symbol;
+    grid-column-end: annotations;
+  }
+}
+
+.method-anotations > .badge {
+  margin-right: 2px;
+}
+
+.method-params template-params {
+  &::before {
+    content: "<";
+  }
+  &::after {
+    content: ">";
+  }
+  > *:not(:last-of-type)::after {
+    content: ",";
+    margin-right: 5px;
+  }
+}
+
+.param-list {
+  display: inline-block;
+
+  &::before {
+    content: "(";
+  }
+  &::after {
+    content: ")";
+  }
+
+  parameter {
+    margin-right: -5px;
+  }
+
+  parameter:not(:last-of-type)::after {
+    content: ",";
+    margin-right: 10px;
+    margin-left: -5px;
+  }
+}

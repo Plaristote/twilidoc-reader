@@ -1,0 +1,12 @@
+<template>
+  <head>
+    <include src="models/type_solver.hpp" />
+    <attribute type="TypeSolver" name="type_solver" />
+  </head>
+  <body tag-name="div" class="popup card type-popup">
+    <div class="card-header" text.bind="type_solver.get_title()" />
+    <div class="card-body"
+         show.bind="type_solver.get_excerpt_html().length()"
+         innerhtml.bind="type_solver.get_excerpt_html()" />
+  </body>
+</template>

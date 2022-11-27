@@ -1,0 +1,23 @@
+<template>
+  <head>
+    <include src="collections/namespaces.hpp" />
+    <include src="helpers/package.hpp" />
+    <attribute type="NamespaceCollection::Subset" name="models" />
+    <script>
+      std::string get_uri(const NamespaceModel& model) const
+      {
+        return PackageHelper::uri(model.get_uri(), PackageHelper::current_package);
+      }
+    </script>
+  </head>
+  <body class="card type-children-list">
+    <div class="card-body">
+      <h5 class="card-title">Namespaces</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item" repeat.for="model of [NamespaceCollection::Subset]models">
+        <a href.bind="root->get_uri(*model)" text.bind="model->get_name()" />
+      </li>
+    </ul>
+  </body>
+</template>

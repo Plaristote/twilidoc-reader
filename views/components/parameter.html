@@ -1,0 +1,24 @@
+<template>
+  <head>
+    <include src="models/param.hpp" />
+    <include src="models/type_solver.hpp" />
+    <include src="views/components/type_popup.hpp" require="TypePopup" />
+    <attribute type="std::shared_ptr<ParamModel>" name="model" />
+    <attribute type="TypeSolver" name="type_solver" />
+    <attribute type="bool" name="with_name" value="true" />
+    <script>
+      bool is_const() const
+      { return model ? model->is_const() : false; }
+
+      virtual std::string get_suffix() const = 0;
+    </script>
+  </head>
+  <body>
+    <span class="typeconst" show.bind="is_const()">const</span>
+    <type-view cpp::type_name.bind="model->get_type_alias()"
+               cpp::type_solver.bind="type_solver"
+               cpp::button.bind="false" />
+    <span class="typeptrs" text.bind="get_suffix()" show.bind="get_suffix().length()" />
+    <span class="varname"  text.bind="model->get_name()" show.bind="with_name && model->get_name().length()" />
+  </body>
+</template>

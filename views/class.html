@@ -1,0 +1,115 @@
+<template>
+  <head>
+    <include src="models/class.hpp" />
+    <include src="views/components/template_params.hpp" require="::TemplateParamsView" />
+    <include src="views/components/class_list.hpp" require="::ClassListView" tag-name="class-list" />
+    <include src="views/components/enum_list.hpp" require="::EnumListView" tag-name="enum-list" />
+    <include src="views/components/class_breadcrumb.hpp" require="::ClassBreadcrumb" tag-name="breadcrumbs" />
+    <include src="views/components/detailed_method_list.hpp" require="::DetailedMethodList" />
+    <include src="views/components/visibility_picker.hpp" require="::VisibilityPicker" />
+    <attribute type="std::shared_ptr<ClassModel>" name="model" />
+    <attribute type="CppVisibility" name="visibility" />
+    <attribute type="std::map<std::string,std::string>" name="method_docs" />
+    <attribute type="bool" name="with_inherited_members" value="false" />
+    <attribute type="MethodList" name="inherited_methods" />
+    <attribute type="FieldList" name="inherited_fields" />
+    <attribute type="ClassCollection::Subset" name="subclasses" />
+    <attribute type="EnumCollection::Subset" name="enums" />
+    <script>
+      virtual void toggle_inherited_display() = 0;
+      virtual std::string documentation_for_method(const std::string&) const = 0;
+    </script>
+  </head>
+  <body>
+    <breadcrumbs cpp::namespace.bind="*model" />
+    <h1 text.bind="model->get_title()" />
+
+    <div class="card type-children-list">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item" show.bind="model->get_bases().size()">
+          <span class="key">Inherits</span>
+          <span class="value">
+            <span repeat.for="ancestor of [std::vector<std::string>]model->get_bases()">
+              <type-view cpp::type_name.bind="ancestor" />
+            </span>
+          </span>
+        </li>
+        <li class="list-group-item" show.bind="model->get_package().length()">
+          <span class="key">Package</span>
+          <span class="value">
+            <a href.bind='"#/packages/" + model->get_package() + "/namespaces"' text.bind="model->get_package()" />
+          </span>
+        </li>
+        <li class="list-group-item">
+          <span class="key">Include</span>
+          <code class="value" text.bind='"#include <" + model->get_include_path() + ">"' />
+        </li>
+        <li class="list-group-item" show.bind="model->get_ldflags().length()">
+          <span class="key">Link</span>
+          <code class="value" text.bind="model->get_ldflags()" />
+        </li>
+        <li class="list-group-item" show.bind="model->is_template()">
+          <span class="key">Template parameters</span>
+          <template-params-view class="value" cpp::list.bind="model->get_template_parameters()" />
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-body members-list">
+        <h5 class="card-title">Members</h5>
+        <visibility-picker ref="visibility_picker" />
+        <div class="card-body">
+          <div class="method-grid constructors">
+            <method-list cpp::methods.bind="model->get_constructors()"
+                         cpp::visibility.bind="visibility_picker.get_value() & signal:update-visibility"/>
+          </div>
+
+          <div class="method-grid">
+            <method-list cpp::methods.bind="model->get_methods()"
+                         cpp::fields.bind="model->get_fields()"
+                         cpp::visibility.bind="visibility_picker.get_value() & signal:update-visibility"/>
+          </div>
+
+          <div class="method-grid inherited-methods" show.bind="with_inherited_members & signal:inherit-display">
+            <method-list cpp::methods.bind="inherited_methods & signal:inherit-display"
+                         cpp::fields.bind="inherited_fields & signal:inherit-display"
+                         cpp::visibility.bind="visibility_picker.get_value() & signal:update-visibility"/>
+          </div>
+
+          <button type="button" class="btn btn-primary btn-sm"
+                  show.bind="model->get_bases().size() > 0"
+                  click.trigger="toggle_inherited_display()">
+            <span text.bind='with_inherited_members ? "Hide inherited members" : "Show inherited members" & signal:inherit-display' />
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div show.bind="subclasses.size()">
+      <class-list cpp::models.bind="subclasses" />
+    </div>
+
+    <div show.bind="enums.size()">
+      <enum-list cpp::models.bind="enums" />
+    </div>
+
+    <div class="card" show.bind="model->get_doc().length() > 0">
+      <div class="card-body">
+        <h5 class="card-title">Detailed description</h5>
+        <doc-block class="card-body doc-block" ref="doc" />
+      </div>
+    </div>
+
+    <div class="card" show.bind="model->get_documented_method_names().size() > 0">
+      <div class="card-body">
+        <h5 class="card-title">Member Type Documentation</h5>
+        <div class="card-body">
+          <detailed-method-list cpp::model.bind="model"
+                                cpp::method_names.bind="model->get_documented_method_names()"
+                                cpp::docs.bind="&method_docs" />
+        </div>
+      </div>
+    </div>
+  </body>
+</template>

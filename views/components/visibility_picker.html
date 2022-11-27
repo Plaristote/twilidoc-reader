@@ -1,0 +1,21 @@
+<template>
+  <head>
+    <include src="models/visibility.hpp" />
+    <attribute type="CppVisibility" name="value" />
+    <script>
+      virtual std::string button_class(CppVisibility) const = 0;
+      virtual void pick_visibility(CppVisibility) = 0;
+    </script>
+  </head>
+  <body class="btn-group">
+    <button class.bind="button_class(PublicVisibility)"
+            text.bind="visibility2string(PublicVisibility)" 
+            click.trigger="pick_visibility(PublicVisibility)"/>
+    <button class.bind="button_class(ProtectedVisibility)"
+            text.bind="visibility2string(ProtectedVisibility)"
+            click.trigger="pick_visibility(ProtectedVisibility)"/>
+    <button class.bind="button_class(PrivateVisibility)"
+            text.bind="visibility2string(PrivateVisibility)"
+            click.trigger="pick_visibility(PrivateVisibility)"/>
+  </body>
+</template>
