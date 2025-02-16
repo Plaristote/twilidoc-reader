@@ -9,7 +9,7 @@ HomeController::HomeController(const Comet::Params& params) : ApplicationControl
 
 void HomeController::index()
 {
-  auto request = Comet::Http::Request::get("docs/_home.html");
+  auto request = Comet::Http::Request::get("docs/twilidoc_home.html");
   auto view = make_shared<Home>();
 
   request->send().then([request, view]()
