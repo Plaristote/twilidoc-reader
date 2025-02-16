@@ -59,7 +59,7 @@ void ProjectModel::probe_namespace_packages(const shared_ptr<NamespaceModel>& mo
 
 Comet::Promise ProjectModel::fetch_external_types()
 {
-  auto request = Comet::Http::Request::get("docs/_external_types.json");
+  auto request = Comet::Http::Request::get("docs/twilidoc_external_types.json");
 
   return request->send().then([this, request]()
   {
