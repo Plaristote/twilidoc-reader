@@ -16,6 +16,21 @@ $param-separator-width: 5px;
   }
 }
 
+.method-list, .method-header {
+  > .visibility {
+    &.public:after {
+      content: "+";
+    }
+    &.protected:after {
+      content: "#";
+    }
+    &.private:after {
+      content: "-";
+    }
+  }
+}
+
+
 .method-list {
   display: grid;
   gap: 10px;
@@ -29,18 +44,6 @@ $param-separator-width: 5px;
     padding: 0;
     margin-left: -37px;
     margin-right: -48px;
-  }
-
-  > .visibility {
-    &.public:after {
-      content: "+";
-    }
-    &.protected:after {
-      content: "#";
-    }
-    &.private:after {
-      content: "-";
-    }
   }
 
   > .return-type {
