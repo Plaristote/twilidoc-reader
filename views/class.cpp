@@ -19,7 +19,15 @@ void ClassView::scroll_to_method(const string& method)
   Element el = find_one("#method_" + escaped_method);
 
   if (!el.is_undefined())
-    el->scrollIntoView();
+  {
+    const double headerSize = 64;
+    auto* rect = el->getBoundingClientRect();
+    Comet::ObjectImpl<client::ScrollToOptions> options(new client::ScrollToOptions);
+
+    options.set("behavior", "smooth");
+    options->set_top(rect->get_top() - headerSize - 10);
+    Comet::window->scrollTo(options.native_object());
+  }
 }
 
 void ClassView::toggle_inherited_display()
